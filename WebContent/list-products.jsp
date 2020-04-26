@@ -1,4 +1,4 @@
-<%@ page import="java.util.*, com.task.productsdemo.*"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,9 +7,11 @@
 <link type="text/css" rel="stylesheet" href="css/style.css">
 <script src="js/sorttable.js"></script>
 </head>
-<%
+
+<%-- <%
 	List<Product> products = (List<Product>) request.getAttribute("PRODUCT-LIST");
-%>
+%> --%>
+
 <body>
 
 	<div id="wrapper">
@@ -53,22 +55,20 @@
 					<input id="Type" class = "checkmark"  type="checkbox" checked="checked"  onclick="checkmarkclick()">
 					</th>
 				</tr>
-				<%
-					for (Product product : products) {
-				%>
+			
+				<c:forEach var = "tempProduct" items="${PRODUCT_LIST}">
+					
 				<tr>
-					<td><%=product.getContractplansegcompl()%></td>
-					<td><%=product.getContract()%></td>					
-					<td><%=product.getBrandname()%></td>
-					<td><%=product.getPlanname()%></td>
-					<td><%=product.getState()%></td>
-					<td><%=product.getStateabbreviation()%></td>
-					<td><%=product.getProducttype()%></td>
+					<td>${tempProduct.contractplansegcompl}</td>
+					<td>${tempProduct.contract}></td>					
+					<td>${tempProduct.brandname}</td>
+					<td>${tempProduct.planname}></td>
+					<td>${tempProduct.state}></td>
+					<td>${tempProduct.stateabbreviation}></td>
+					<td>${tempProduct.producttype}></td>
 
 				</tr>
-				<%
-					}
-				%>
+			  </c:forEach>
 			</table>
 		</div>
 	</div>
@@ -96,8 +96,9 @@
 
 			tr = table.getElementsByTagName("tr");
 
+			var exists = false;
 			for (i = 0; i < tr.length; i++) {
-				
+				 exists = false;
 				for (j = 0; j < tr[i].getElementsByTagName("td").length; j++) {
 					td = tr[i].getElementsByTagName("td")[j];
 				
@@ -112,9 +113,10 @@
 						console.log(td.innerHTML.toUpperCase() , " ",td.innerHTML.toUpperCase().indexOf(filter))
 						if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
 							tr[i].style.display = "";
-
+							exists = true;
 						} else {
-							tr[i].style.display = "none" 
+							tr[i].style.display = exists == false ? "none"  : "";
+						//	tr[i].style.display = "none" 
 						}
 					}
 

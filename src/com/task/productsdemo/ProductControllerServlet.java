@@ -46,7 +46,7 @@ public class ProductControllerServlet extends HttpServlet {
 		List<Product> products = productDbUtil.getProducts(path);
 		
 		
-		request.setAttribute("PRODUCT-LIST", products);
+		request.setAttribute("PRODUCT_LIST", products);
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/list-products.jsp");
 		dispatcher.forward(request, response);
